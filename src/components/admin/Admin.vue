@@ -8,7 +8,7 @@
   export default {
     methods: {
         goback(){
-            this.$router.push('/PassengerManagement')
+            this.$router.push('/passenger_management')
         }
     }
   }
