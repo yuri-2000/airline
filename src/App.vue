@@ -10,18 +10,14 @@ export default {
     beforeCreate: function(){
       document
       .querySelector("body")
-      .setAttribute("style", "margin: 0; background-color: #c9f7f056");
+      .setAttribute("style", "margin: 0; background-color: #ffffff");
     },
 };
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #c9f7f056;
-  margin-top: 60px;
+    margin: 0;
+    padding: 0;
 }
 </style>
