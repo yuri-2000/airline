@@ -41,7 +41,7 @@
       </b-col>
     </b-row>
 
-    <b-breadcrumb-item href="#/" class="footer">
+    <b-breadcrumb-item href="#/" class="back">
       <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
       Home
     </b-breadcrumb-item>
@@ -83,7 +83,7 @@
   height: 100%;
   width: 500px;
 }
-.footer{
+.back{
   height: 50px;
   width: 7%;
   right: 0px;
