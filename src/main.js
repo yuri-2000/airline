@@ -6,6 +6,7 @@ import VueCookies from 'vue-cookies'
 import Admin from './components/admin/Admin'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
+import ShowAirline from './components/passenger_management/ShowAirline'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { BSidebar } from 'bootstrap-vue'
 // import { SidebarPlugin } from 'bootstrap-vue'
@@ -43,7 +44,14 @@ const routes = [
     metadata: {
       title: '个人信息'
     },
-  }
+  },
+  {
+    path: '/passenger_management',
+    component: ShowAirline,
+    metadata: {
+      title: '搜索航班'
+    },
+  },
 ]
 
 const router = new VueRouter({
