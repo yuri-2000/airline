@@ -5,10 +5,15 @@ import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import Admin from './components/admin/Admin'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
+import PassengerInform from './components/passenger_management/PassengerInform'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BSidebar } from 'bootstrap-vue'
+// import { SidebarPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// Vue.use(SidebarPlugin)
+Vue.component('b-sidebar', BSidebar)
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -19,17 +24,24 @@ Vue.prototype.serverURL = 'http://127.0.0.1:5000/'
 
 const routes = [
   {
-    path :'/',
-    component : Admin,
+    path: '/',
+    component: Admin,
     metadata: {
       title: '航空订票系统'
     }
   },
   {
-    path :'/passenger_management',
-    component : PassengerManagement,
+    path: '/passenger_management',
+    component: PassengerManagement,
     metadata: {
       title: '乘客系统'
+    },
+  },
+  {
+    path: '/passenger_management',
+    component: PassengerInform,
+    metadata: {
+      title: '个人信息'
     },
   }
 ]

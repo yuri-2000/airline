@@ -26,7 +26,7 @@
           ></b-form-input>
         </b-col>
       </b-row>
-      <b-button pill variant="outline-primary" href="#/passenger_management/AddPassenger"
+      <b-button pill variant="outline-primary" @click="register()"
         >register</b-button
       >
       <b-button pill variant="outline-primary" @click="login()"
@@ -51,6 +51,20 @@ export default {
       }).then((res) => {
         let data = res.data;
         if (data.success) this.$router.push("/passenger_management");
+        else this.alertPop = true;
+      });
+    },
+    register: function(){
+      this.$axios({
+        url: "http://127.0.0.1:5000/passenger/add_passenger",
+        method: "post",
+        data:{
+          username: this.username,
+          password:this.password,
+        },
+      }).then((res) => {
+        let data = res.data;
+        if(data.success) this.$router.push("/passenger_management");
         else this.alertPop = true;
       });
     },
