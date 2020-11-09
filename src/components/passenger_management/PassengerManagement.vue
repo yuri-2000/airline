@@ -38,7 +38,7 @@
       </b-col>
     </b-row>
 
-    <b-button variant="warning" @click="showairline" >搜索机票</b-button>
+    <b-button variant="warning" @click="showairline">搜索机票</b-button>
 
     <b-button v-b-toggle.sidebar-1>Toggle Sidebar</b-button>
     <b-sidebar id="sidebar-1" title="Sidebar">
@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     showairline() {
-      this.$router.push("/passenger_management/ShowAirline");
+      this.$router.push("/show_airline");
     },
     goback() {
       this.$router.push("/");
@@ -109,6 +109,6 @@ export default {
   right: 0px;
   top: 0px;
   position: absolute;
-  color: #b8dadfda;
+  color: #83afb6da;
 }
 </style>

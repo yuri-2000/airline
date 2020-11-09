@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  props:["alerter"],
+  props: ["alerter"],
   methods: {
     login: function () {
       this.$axios({
@@ -66,9 +66,9 @@ export default {
       }).then((res) => {
         let data = res.data;
         if (data.success) {
-          this.$cookies.set("username", data.username);
+          this.$cookies.set("username", this.username);
           this.$router.push("/passenger_management");
-        } else this.alerter("用户名已存在")
+        } else this.alerter("错误", "用户名已存在");
       });
     },
   },

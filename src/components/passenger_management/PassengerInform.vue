@@ -9,10 +9,7 @@
             disabled
             description="登录时确定的唯一用户名，不可修改"
           >
-            <b-form-input
-              type="text"
-              v-model="username"
-            ></b-form-input>
+            <b-form-input type="text" v-model="username"></b-form-input>
           </b-form-group>
           <b-form-group label="密码:">
             <b-form-input
@@ -73,15 +70,39 @@ export default {
         method: "post",
         withCredentials: true,
         data: {
-          username: this.$cookies.get("username")
+          username: this.$cookies.get("username"),
         },
       }).then((response) => {
         let data = response.data;
         if (data.success) {
           this.username = data.u_info.username;
           this.name = data.u_info.name;
+          this.type = data.u_info.type;
+          this.mile_score = data.u_info.mile_score;
         } else {
           console.log(this);
+          this.alerter("错误", data.info);
+        }
+      });
+    },
+    submit_info: function () {
+      this.$axios({
+        url: this.serverURL + "passenger/update_passenger_info",
+        method: "post",
+        withCredentials: true,
+        data: {
+          username: this.username,
+          password: this.password,
+          name: this.name,
+          type: this.type,
+          mile_score: this.mile_score,
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.alerter("成功", "个人信息修改成功");
+          this.init_info();
+        } else {
           this.alerter("错误", data.info);
         }
       });
@@ -91,7 +112,7 @@ export default {
     },
   },
   created: function () {
-        this.init_info();
+    this.init_info();
   },
 };
 </script>

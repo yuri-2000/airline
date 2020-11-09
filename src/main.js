@@ -44,7 +44,7 @@ const routes = [
     },
   },
   {
-    path: '/passenger_management',
+    path: '/show_airline',
     component: ShowAirline,
     metadata: {
       title: '搜索航班'
