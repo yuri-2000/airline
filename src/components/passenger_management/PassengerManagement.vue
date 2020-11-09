@@ -1,13 +1,5 @@
 <template>
   <div id="buy_ticket">
-    <side-bar :child-tree="menu" />
-    <div class="center-container">
-      <router-view :alerter="alert"></router-view>
-    </div>
-    <b-modal v-model="modalShow" :title="modal">
-      {{ modalInfo }}
-    </b-modal>
-
     <b-row class="my-1">
       <b-col sm="3">
         <label>出发城市:</label>
@@ -57,7 +49,7 @@
           fluid
           thumbnail
         ></b-img>
-        <b-link href="#/passenger_management/PassengerInform">个人信息</b-link>
+        <b-link href="#/passenger_inform">个人信息</b-link>
       </div>
     </b-sidebar>
 

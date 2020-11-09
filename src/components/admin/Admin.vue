@@ -29,9 +29,7 @@
       <b-button pill variant="outline-primary" @click="register()"
         >register</b-button
       >
-      <b-button pill variant="outline-primary" @click="login()"
-        >Login</b-button
-      >
+      <b-button pill variant="outline-primary" @click="login()">Login</b-button>
       <b-modal v-model="alertPop" title="登录失败"> 用户名或密码错误 </b-modal>
     </template>
   </div>
@@ -39,6 +37,7 @@
 
 <script>
 export default {
+  props:["alerter"],
   methods: {
     login: function () {
       this.$axios({
@@ -50,22 +49,26 @@ export default {
         },
       }).then((res) => {
         let data = res.data;
-        if (data.success) this.$router.push("/passenger_management");
-        else this.alertPop = true;
+        if (data.success) {
+          this.$cookies.set("username", this.username);
+          this.$router.push("/passenger_management");
+        } else this.alertPop = true;
       });
     },
-    register: function(){
+    register: function () {
       this.$axios({
         url: "http://127.0.0.1:5000/passenger/add_passenger",
         method: "post",
-        data:{
+        data: {
           username: this.username,
-          password:this.password,
+          password: this.password,
         },
       }).then((res) => {
         let data = res.data;
-        if(data.success) this.$router.push("/passenger_management");
-        else this.alertPop = true;
+        if (data.success) {
+          this.$cookies.set("username", data.username);
+          this.$router.push("/passenger_management");
+        } else this.alerter("用户名已存在")
       });
     },
   },

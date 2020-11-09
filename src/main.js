@@ -8,13 +8,11 @@ import PassengerManagement from './components/passenger_management/PassengerMana
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ShowAirline from './components/passenger_management/ShowAirline'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import { BSidebar } from 'bootstrap-vue'
-// import { SidebarPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// Vue.use(SidebarPlugin)
-Vue.component('b-sidebar', BSidebar)
+
+axios.defaults.withCredentials = true;
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -39,7 +37,7 @@ const routes = [
     },
   },
   {
-    path: '/passenger_management',
+    path: '/passenger_inform',
     component: PassengerInform,
     metadata: {
       title: '个人信息'
