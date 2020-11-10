@@ -31,6 +31,7 @@
         </b-form>
       </b-card>
     </template>
+    <!-- 返回填写订票信息界面 -->
     <b-breadcrumb-item @click="gomenu" class="back">
       <b-icon
         icon="house-fill"
@@ -58,12 +59,14 @@ export default {
     };
   },
   methods: {
+    // 密码初选不可见
     pass_focus: function () {
       if (this.pass_first_select) {
         this.password = "";
         this.pass_first_select = false;
       }
     },
+    // 初始化个人信息
     init_info: function () {
       this.$axios({
         url: this.serverURL + "passenger/get_passenger_info",
@@ -85,6 +88,7 @@ export default {
         }
       });
     },
+    // 修改个人信息
     submit_info: function () {
       this.$axios({
         url: this.serverURL + "passenger/update_passenger_info",

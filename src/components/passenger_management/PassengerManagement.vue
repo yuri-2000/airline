@@ -5,7 +5,10 @@
         <label>出发城市:</label>
       </b-col>
       <b-col sm="8">
-        <b-form-input placeholder="Enter your start"></b-form-input>
+        <b-form-input
+          v-model="start"
+          placeholder="Enter your start"
+        ></b-form-input>
       </b-col>
     </b-row>
 
@@ -14,7 +17,10 @@
         <label>到达城市:</label>
       </b-col>
       <b-col sm="8">
-        <b-form-input placeholder="Enter your destination"></b-form-input>
+        <b-form-input
+          v-model="destination"
+          placeholder="Enter your destination"
+        ></b-form-input>
       </b-col>
     </b-row>
 
@@ -67,6 +73,7 @@
 
 <script>
 export default {
+  props: ["alerter"],
   data() {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -79,14 +86,32 @@ export default {
 
     return {
       hideHeader: true,
+      start: "",
+      destination: "",
       start_date: "",
       min: minDate,
       max: maxDate,
     };
   },
   methods: {
-    showairline() {
-      this.$router.push("/show_airline");
+    showairline: function () {
+      this.$axios({
+        url: "http://127.0.0.1:5000/passenger/get_airline",
+        method: "post",
+        data: {
+          start: this.start,
+          destination: this.destination,
+          start_date: this.start_date,
+        },
+      }).then((res) => {
+        let data = res.data;
+        if (data.success) {
+          this.$cookies.set("start", this.start);
+          this.$cookies.set("destination", this.destination);
+          this.$cookies.set("start_date", this.start_date);
+          this.$router.push("/show_airline");
+        } else this.alertPop("错误", "未找到符合要求的航班");
+      });
     },
     goback() {
       this.$router.push("/");

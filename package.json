@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.18.1",
+    "calendar.vue": "^0.0.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-axios": "^3.1.3",
