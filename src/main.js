@@ -2,8 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
+import moment from 'moment'
 import VueCookies from 'vue-cookies'
 import Admin from './components/admin/Admin'
+import AdminLogin from './components/admin_management/AdminLogin'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ShowAirline from './components/passenger_management/ShowAirline'
@@ -14,6 +16,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 axios.defaults.withCredentials = true;
 Vue.config.productionTip = false
+Vue.prototype.$config = moment;
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -48,6 +51,13 @@ const routes = [
     component: ShowAirline,
     metadata: {
       title: '搜索航班'
+    },
+  },
+  {
+    path: '/admin_login',
+    component: AdminLogin,
+    metadata: {
+      title: '管理员登录'
     },
   },
 ]

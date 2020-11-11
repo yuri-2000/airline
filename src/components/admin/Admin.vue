@@ -25,6 +25,9 @@
       <b-button pill variant="outline-primary" @click="login()">Login</b-button>
       <b-modal v-model="alertPop" title="登录失败"> 用户名或密码错误 </b-modal>
     </template>
+    <div>
+      <b-link href="#/admin_login" class="isadmin">我是管理员</b-link>
+    </div>
   </div>
 </template>
 
@@ -82,4 +85,11 @@
     text-align: center;
     margin: 0px auto;
   }
+  .isadmin {
+  height: 50px;
+  width: 7%;
+  right: 0px;
+  top: 0px;
+  position: absolute;
+}
 </style>

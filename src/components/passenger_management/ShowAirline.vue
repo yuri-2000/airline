@@ -1,52 +1,58 @@
 <template>
-    <div>
-        <b-table striped hover :items="items"></b-table>
-    </div>
+  <div>
+    <b-table striped hover :items="items" :fields="fields"></b-table>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "ShowAirline",
-        props:["alerter"],
-        data: function () {
-            return {
-                flight_num: "",
-                start_time: "",
-                arrive_time: "",
-                rest: "",
-                price: "",
-                items: [
-                    {
-                        航班号: this.flight_num,
-                        出发时间: this.start_time,
-                        抵达时间: this.arrive_time,
-                        余票量: this.rest,
-                        价格: this.price,
-                    }
-                ]
-            }
+export default {
+  name: "ShowAirline",
+  props: ["alerter"],
+  data: function () {
+    return {
+      fields: [
+        "destination",
+        "flight_num",
+        {
+          key: "standard_price",
+          lable: "price",
+          sortable: true,
         },
-        methods: {
-            // 展示所有符合条件的航班
-            get_airline: function(){
-                this.$axios({
-                    url: this.serverURL + "passenger/get_passenger_info",
-                    method: "post",
-                    data: {
-                        start: this.$cookies.get("start"),
-                        destination: this.$cookies.get("destination"),
-                    },
-                })
-                // .then((response) => {
-                //     let data = response.data;
-                //     if(data.success) {
-                //     }
-                // });
-            }
+        "start",
+        {
+          key: "start_date",
+        },
+      ],
+      items: [],
+    };
+  },
+  methods: {
+    // 展示所有符合条件的航班
+    get_airline: function () {
+      this.$axios({
+        url: this.serverURL + "passenger/get_airline",
+        method: "post",
+        data: {
+          start: this.$cookies.get("start"),
+          destination: this.$cookies.get("destination"),
+          start_date: this.$cookies.get("start_date"),
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          console.log(data.airline_info)
+          this.items = data.airline_info;
+        } else {
+          this.alerter("错误", data);
         }
-    }
+      });
+    },
+  },
+  created: function () {
+    this.get_airline();
+  },
+};
 </script>
 
 <style scoped>
-
 </style>
