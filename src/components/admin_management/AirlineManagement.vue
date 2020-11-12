@@ -30,12 +30,10 @@ export default {
     // 展示所有符合条件的航班
     get_airline: function () {
       this.$axios({
-        url: this.serverURL + "passenger/get_airline",
+        url: this.serverURL + "admin/get_airline",
         method: "post",
         data: {
-          start: this.$cookies.get("start"),
-          destination: this.$cookies.get("destination"),
-          start_date: this.$cookies.get("start_date"),
+          id: this.$cookies.get("id"),
         },
       }).then((response) => {
         let data = response.data;

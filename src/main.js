@@ -7,10 +7,12 @@ import VueCookies from 'vue-cookies'
 import Admin from './components/admin/Admin'
 import AdminLogin from './components/admin_management/AdminLogin'
 import AdminManagement from './components/admin_management/AdminManagement'
+import AdminInformation from './components/admin_management/AdminInformation'
+import AirlineManagement from './components/admin_management/AirlineManagement'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ShowAirline from './components/passenger_management/ShowAirline'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, BIcon, BIconArrowUp, BIconArrowDown, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -22,6 +24,9 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueCookies)
+Vue.component('BIcon', BIcon)
+Vue.component('BIconArrowUp', BIconArrowUp)
+Vue.component('BIconArrowDown', BIconArrowDown)
 Vue.prototype.$axios = axios
 Vue.prototype.serverURL = 'http://127.0.0.1:5000/'
 
@@ -66,6 +71,20 @@ const routes = [
     component: AdminManagement,
     metadata: {
       title: '管理员界面'
+    },
+  },
+  {
+    path: '/admin_information',
+    component: AdminInformation,
+    metadata: {
+      title: '管理员信息'
+    },
+  },
+  {
+    path: '/airline_management',
+    component: AirlineManagement,
+    metadata: {
+      title: '航班管理'
     },
   },
 ]
