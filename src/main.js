@@ -6,6 +6,7 @@ import moment from 'moment'
 import VueCookies from 'vue-cookies'
 import Admin from './components/admin/Admin'
 import AdminLogin from './components/admin_management/AdminLogin'
+import AdminManagement from './components/admin_management/AdminManagement'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ShowAirline from './components/passenger_management/ShowAirline'
@@ -58,6 +59,13 @@ const routes = [
     component: AdminLogin,
     metadata: {
       title: '管理员登录'
+    },
+  },
+  {
+    path: '/admin_management',
+    component: AdminManagement,
+    metadata: {
+      title: '管理员界面'
     },
   },
 ]

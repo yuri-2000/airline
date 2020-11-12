@@ -1,132 +1,95 @@
 <template>
-  <div class="body">
-    <div id="wrapper">
-      <div id="login_form">
-        <form>
-          <input type="text" placeholder="用户名" id="r_user_name"/>
-          <input type="password" placeholder="密码" id="r_password" />
-          <input type="text" placeholder="电子邮件" id="r_emial" />
-          <button id="create">创建账户</button>
-          <p>已经有了一个账户?</p>
-          <a href="#">立刻登录</a>
-        </form>
-        <form>
-          <input type="text" placeholder="用户名" id="user_name" />
-          <input type="password" placeholder="密码" id="password" />
-          <button id="login">登录</button>
-          <p>还没有账户?</p>
-          <a href="#">立刻创建</a>
-        </form>
-      </div>
+  <div class="Admin">
+    <b-title>欢迎使用航空管理系统</b-title>
+    <template>
+      <b-row class="my-1">
+        <b-col sm="3">
+          <label>用户名:</label>
+        </b-col>
+        <b-col sm="8">
+          <b-form-input v-model="username" placeholder="Username"></b-form-input>
+        </b-col>
+      </b-row>
+
+      <b-row class="my-1">
+        <b-col sm="3">
+          <label>密码:</label>
+        </b-col>
+        <b-col sm="8">
+          <b-form-input type="password" v-model="password" placeholder="Password"></b-form-input>
+        </b-col>
+      </b-row>
+      <!-- 注册按钮 -->
+      <b-button pill variant="outline-primary" @click="register()">register</b-button>
+      <!-- 登录按钮 -->
+      <b-button pill variant="outline-primary" @click="login()">Login</b-button>
+      <b-modal v-model="alertPop" title="登录失败"> 用户名或密码错误 </b-modal>
+    </template>
+    <div>
+      <b-link href="#/" class="isadmin">我是乘客</b-link>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+  export default {
+    props: ["alerter"],
+    methods: {
+      login: function () {
+        this.$axios({
+          url: "http://127.0.0.1:5000/admin/login",
+          method: "post",
+          data: {
+            username: this.username,
+            password: this.password,
+          },
+        }).then((res) => {
+          let data = res.data;
+          if (data.success) {
+            this.$cookies.set("username", this.username);
+            this.$router.push("/admin_management");
+          } else this.alertPop = true;
+        });
+      },
+      register: function () {
+        this.$axios({
+          url: "http://127.0.0.1:5000/admin/register",
+          method: "post",
+          data: {
+            username: this.username,
+            password: this.password,
+          },
+        }).then((res) => {
+          let data = res.data;
+          if (data.success) {
+            this.$cookies.set("username", this.username);
+            this.$router.push("/admin_management");
+          } else this.alerter("错误", "用户名已存在");
+        });
+      },
+    },
+    data: function () {
+      return {
+        password: "",
+        username: "",
+        alertPop: false,
+      };
+    },
+  };
 </script>
 
 <style scoped>
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-.body {
-  background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8dc26f);
-  background: -moz-linear-gradient(right, #76b852, #8dc26f);
-  background: -o-linear-gradient(right, #76b852, #8dc26f);
-  background: linear-gradient(to left, #76b852, #8dc26f);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.login-page {
-  width: 360px;
-  padding: 8% 0 0;
-  margin: auto;
-}
-.form {
-  position: relative;
-  z-index: 1;
-  background: #ffffff;
-  max-width: 360px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
-.form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-.form button {
-  font-family: "Microsoft YaHei", "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #4caf50;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #ffffff;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-.form button:hover,
-.form button:active,
-.form button:focus {
-  background: #43a047;
-}
-.form .message {
-  margin: 15px 0 0;
-  color: #b3b3b3;
-  font-size: 12px;
-}
-.form .message a {
-  color: #4caf50;
-  text-decoration: none;
-}
-.form .register-form {
-  display: none;
-}
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 300px;
-  margin: 0 auto;
-}
-.container:before,
-.container:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.container .info {
-  margin: 50px auto;
-  text-align: center;
-}
-.container .info h1 {
-  margin: 0 0 15px;
-  padding: 0;
-  font-size: 36px;
-  font-weight: 300;
-  color: #1a1a1a;
-}
-.container .info span {
-  color: #4d4d4d;
-  font-size: 12px;
-}
-.container .info span a {
-  color: #000000;
-  text-decoration: none;
-}
-.container .info span .fa {
-  color: #ef3b3a;
+  .Admin {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    margin: 0px auto;
+  }
+  .isadmin {
+  height: 50px;
+  width: 7%;
+  right: 0px;
+  top: 0px;
+  position: absolute;
 }
 </style>
