@@ -48,7 +48,6 @@ export default {
   data: function () {
     return {
       transProps: {
-        // 列表排序动画
         name: "flip-list",
       },
       fields: [

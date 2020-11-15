@@ -116,6 +116,33 @@ export default {
     };
   },
   methods: {
+    init_info: function () {
+      this.$axios({
+        url: this.serverURL + "admin/get_airline_info",
+        method: "post",
+        data: {
+          a_id: this.$cookies.get("a_id"),
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.a_c_id = data.a_info.a_c_id;
+          this.start = data.a_info.start;
+          this.destination = data.a_info.destination;
+          this.air_model = data.a_info.air_model;
+          this.flight_num = data.a_info.flight_num;
+          this.start_date = data.a_info.start_date;
+          this.arrive_date = data.a_info.arrive_date;
+          this.eco = data.a_info.eco;
+          this.fir = data.a_info.fir;
+          this.mileage = data.a_info.mileage;
+          this.standard_price = data.a_info.standard_price;
+        } else {
+          console.log(this);
+          this.alerter("错误", data.info);
+        }
+      });
+    },
     submit_info: function () {
       this.$axios({
         url: this.serverURL + "admin/add_airline",
@@ -143,6 +170,9 @@ export default {
         }
       });
     },
+  },
+  created: function () {
+    this.init_info();
   },
 };
 </script>
