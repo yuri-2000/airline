@@ -1,6 +1,43 @@
 <template>
   <div>
-    <b-table striped hover :items="items" :fields="fields"></b-table>
+    <b-table
+      sticky-header="600px"
+      head-variant="dark"
+      striped
+      hover
+      :items="items"
+      :fields="fields"
+      selectable
+      @row-selected="onRowSelected"
+      responsive="sm"
+      :select-mode="selectMode"
+      primary-key="id"
+      :tbody-transition-props="transProps"
+      class="flip-list-move"
+    >
+      <template #cell(selected)="{ rowSelected }">
+        <template v-if="rowSelected">
+          <span aria-hidden="true">&check;</span>
+          <span class="sr-only">Selected</span>
+        </template>
+        <template v-else>
+          <span aria-hidden="true">&nbsp;</span>
+          <span class="sr-only">Not selected</span>
+        </template>
+      </template>
+    </b-table>
+    <p>
+      Selected Rows:<br />
+      {{ selected }}
+    </p>
+    <div>
+      <b-button variant="primary" href="#/choose_seat" @click="onRowSelected"
+        >Buy</b-button
+      >
+      <b-button variant="danger" href="#/passenger_management">
+        <b-icon icon="back" aria-hidden="true"></b-icon> Back
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -10,7 +47,12 @@ export default {
   props: ["alerter"],
   data: function () {
     return {
+      transProps: {
+        // 列表排序动画
+        name: "flip-list",
+      },
       fields: [
+        "id",
         "flight_num",
         "start",
         "destination",
@@ -22,8 +64,11 @@ export default {
         {
           key: "start_date",
         },
+        "selected",
       ],
       items: [],
+      selectMode: "single",
+      selected: [],
     };
   },
   methods: {
@@ -47,6 +92,9 @@ export default {
         }
       });
     },
+    onRowSelected: function (items) {
+      (this.selected = items), console.log(this.selected);
+    },
   },
   created: function () {
     this.get_airline();
@@ -54,5 +102,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.flip-list-move {
+  transition: transform 1s;
+}
 </style>

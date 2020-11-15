@@ -13,9 +13,9 @@
         </b-col>
       </b-row>
       <div class="hot key">
-        <a href="javascript:;" @click="changeStart('上海')">上海</a>
-        <a href="javascript:;" @click="changeStart('广州')">广州</a>
-        <a href="javascript:;" @click="changeStart('北京')">北京</a>
+        <a href="javascript:;" @click="changeStart('SHA')">上海</a>
+        <a href="javascript:;" @click="changeStart('GUA')">广州</a>
+        <a href="javascript:;" @click="changeStart('BEI')">北京</a>
       </div>
 
       <b-row class="my-1">
@@ -30,9 +30,9 @@
         </b-col>
       </b-row>
       <div class="hot key">
-        <a href="javascript:;" @click="changeDestination('上海')">上海</a>
-        <a href="javascript:;" @click="changeDestination('广州')">广州</a>
-        <a href="javascript:;" @click="changeDestination('北京')">北京</a>
+        <a href="javascript:;" @click="changeDestination('SHA')">上海</a>
+        <a href="javascript:;" @click="changeDestination('GUA')">广州</a>
+        <a href="javascript:;" @click="changeDestination('BEI')">北京</a>
       </div>
 
       <b-row class="my-1">

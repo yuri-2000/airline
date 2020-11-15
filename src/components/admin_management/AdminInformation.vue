@@ -40,6 +40,7 @@
 
 <script>
 export default {
+  
   name: "AdminInform",
   props: ["alerter"],
   data: function () {

@@ -1,6 +1,24 @@
 <template>
   <div>
     <b-table striped hover :items="items" :fields="fields"></b-table>
+    <div>
+      <b-button-toolbar>
+      <b-button-group>
+        <b-button variant="warning" href="#/add_airline">
+          <b-icon icon="plus-circle" aria-hidden="true"></b-icon> Add 
+        </b-button>
+        <b-button variant="danger">
+          <b-icon icon="dash-circle" aria-hidden="true"></b-icon> Delete 
+        </b-button>
+        <b-button variant="info">
+          <b-icon icon="file-earmark" aria-hidden="true"></b-icon> Information
+        </b-button>
+        <b-button variant="primary" href="#/admin_management">
+          <b-icon icon="back" aria-hidden="true"></b-icon> Back
+        </b-button>
+      </b-button-group>
+      </b-button-toolbar>
+    </div>
   </div>
 </template>
 
@@ -14,13 +32,11 @@ export default {
         "flight_num",
         "start",
         "destination",
+        "start_date",
         {
           key: "standard_price",
           lable: "price",
           sortable: true,
-        },
-        {
-          key: "start_date",
         },
       ],
       items: [],
