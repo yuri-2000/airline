@@ -69,6 +69,7 @@ export default {
       }).then((res) => {
         let data = res.data;
         if (data.success) {
+          // id与登录相同问题
           this.$cookies.set("id", data.id);
           this.$cookies.set("username", this.username);
           this.$router.push("/admin_management");

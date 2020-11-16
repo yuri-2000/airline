@@ -15,6 +15,7 @@ import PassengerManagement from './components/passenger_management/PassengerMana
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ChooseSeat from './components/passenger_management/ChooseSeat'
 import ShowAirline from './components/passenger_management/ShowAirline'
+import ShowTicket from './components/passenger_management/ShowTicket'
 import { BootstrapVue, BIcon, BIconArrowUp, BIconArrowDown, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -67,6 +68,13 @@ const routes = [
     component: ChooseSeat,
     metadata: {
       title: '挑选座位'
+    },
+  },
+  {
+    path: '/show_ticket',
+    component: ShowTicket,
+    metadata: {
+      title: '搜索订票'
     },
   },
   {

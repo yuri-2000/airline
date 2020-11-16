@@ -21,6 +21,13 @@
           <b-form-group label="姓名:">
             <b-form-input type="text" v-model="name"></b-form-input>
           </b-form-group>
+          <b-form-group label="性别:">
+            <b-form-select
+              type="text"
+              v-model="gender"
+              :options="genderoptions"
+            ></b-form-select>
+          </b-form-group>
           <b-form-group label="会员类型:">
             <b-form-input type="text" v-model="type"></b-form-input>
           </b-form-group>
@@ -54,8 +61,13 @@ export default {
       password: "do_not_change",
       pass_first_select: true,
       name: "",
+      gender: "",
       type: "",
       mile_score: "",
+      genderoptions: [
+        { value: "male", text: "男"},
+        { value: "female", text: "女"},
+      ],
     };
   },
   methods: {
@@ -80,6 +92,7 @@ export default {
         if (data.success) {
           this.username = data.u_info.username;
           this.name = data.u_info.name;
+          this.gender = data.u_info.gender;
           this.type = data.u_info.type;
           this.mile_score = data.u_info.mile_score;
         } else {
@@ -98,6 +111,7 @@ export default {
           username: this.username,
           password: this.password,
           name: this.name,
+          gender: this.gender,
           type: this.type,
           mile_score: this.mile_score,
         },

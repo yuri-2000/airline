@@ -68,6 +68,8 @@ export default {
       }).then((res) => {
         let data = res.data;
         if (data.success) {
+          //id与admin公用问题
+          this.$cookies.set("id", data.id);
           this.$cookies.set("username", this.username);
           this.$router.push("/passenger_management");
         } else this.alertPop = true;
