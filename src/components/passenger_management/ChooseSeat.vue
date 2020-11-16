@@ -19,21 +19,29 @@
 
                 <div class="port-seg">
                   <div class="flight-seg origin">
+                    <!-- start_time -->
                     <div class="time">02:00</div>
-                    <div class="port">IST</div>
+                    <!-- sta -->
+                    <div class="port">{{ start }}</div>
+                    <!-- start -->
                     <div class="name">Istanbul</div>
                   </div>
                   <div class="flight-seg destination">
+                    <!-- arrive_time -->
                     <div class="time">10:20</div>
+                    <!-- des -->
                     <div class="port">ESB</div>
+                    <!-- destination -->
                     <div class="name">Ankara</div>
                   </div>
                 </div>
               </div>
               <div class="item it-2">
                 <div class="dr-row">
+                  <!-- flight_num -->
                   <span class="al-name">Etihad</span>
                 </div>
+                <!-- start_date -->
                 <div class="take-tim">Wed, Jan 23, 2019</div>
               </div>
             </div>
@@ -53,6 +61,16 @@
     </svg>
   </div>
 </template>
+
+<script>
+  export default {
+    data: function(){
+      return{
+        start: 'SHA',
+      }
+    },
+  };
+</script>
 
 <style>
   .section {
