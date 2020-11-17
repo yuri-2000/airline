@@ -1,8 +1,8 @@
 <template>
   <div>
     <template>
-      <b-card title="添加航班" sub-title="Add Airline"></b-card>
-      <b-card header="航班信息" class="info-content">
+      <b-card title="修改航线" sub-title="Add Airline"></b-card>
+      <b-card header="航线信息" class="info-content">
         <b-form>
           <b-form-group label="所属公司:">
             <b-form-select
@@ -24,10 +24,44 @@
             ></b-form-select>
           </b-form-group>
           <b-form-group label="飞机型号:">
-            <b-form-input type="text" v-model="air_model"></b-form-input>
+            <b-form-select
+              type="text"
+              v-model="air_model"
+              :options="modeloptions"
+            ></b-form-select>
           </b-form-group>
           <b-form-group label="航班号:">
             <b-form-input type="text" v-model="flight_num"></b-form-input>
+            <b-button v-b-toggle.my-collapse>显示航班</b-button>
+            <!-- Top of collapse -->
+            <b-collapse id="my-collapse">
+              <b-table
+                sticky-header="600px"
+                head-variant="dark"
+                striped
+                hover
+                :items="items"
+                :fields="fields"
+                selectable
+                 @row-selected="onRowSelected"
+                responsive="sm"
+                :select-mode="selectMode"
+                primary-key="id"
+                :tbody-transition-props="transProps"
+                class="flip-list-move"
+                ><template #cell(selected)="{ rowSelected }">
+                  <template v-if="rowSelected">
+                    <span aria-hidden="true">&check;</span>
+                    <span class="sr-only">Selected</span>
+                  </template>
+                  <template v-else>
+                    <span aria-hidden="true">&nbsp;</span>
+                    <span class="sr-only">Not selected</span>
+                  </template>
+                </template></b-table
+              >
+            </b-collapse>
+            <!-- End of collapse -->
           </b-form-group>
           <b-form-group label="出发时间:">
             <b-form-timepicker
@@ -67,18 +101,13 @@
 
 <script>
 export default {
-  name: "AddAirline",
+  name: "AirlineInformation",
   props: ["alerter"],
   data: function () {
-    // const now = new Date();
-    // const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    // const minDate = new Date(today);
-    // minDate.setMonth(minDate.getMonth());
-    // minDate.setDate(minDate.getDate());
-    // const maxDate = new Date(today);
-    // maxDate.setMonth(maxDate.getMonth() + 2);
-    // maxDate.setDate(15);
     return {
+      transProps: {
+        name: "flip-list",
+      },
       a_c_id: "",
       start: "",
       destination: "",
@@ -96,11 +125,32 @@ export default {
         { value: "GUA", text: "广州", disabled: false },
         { value: "BEI", text: "北京", disabled: false },
       ],
+      modeloptions: [
+        { value: "空客330", text: "空客330", disabled: false },
+        { value: "波音747", text: "波音747", disabled: false },
+        { value: "波音777", text: "波音777", disabled: false },
+      ],
       idoptions: [
         { value: "1", text: "北京航空", disabled: false },
         { value: "2", text: "九元航空", disabled: false },
         { value: "3", text: "上海航空", disabled: false },
       ],
+      options: [],
+      fields: [
+        "selected",
+        "id",
+        {
+          key: "flight_num",
+          sortable: true,
+        },
+        {
+          key: "date",
+          sortable: true,
+        },
+      ],
+      items: [],
+      selectMode: "single",
+      selected: [],
     };
   },
   methods: {
@@ -131,11 +181,30 @@ export default {
         }
       });
     },
+    get_flight_all: function () {
+      this.$axios({
+        url: this.serverURL + "admin/get_flight_all",
+        method: "post",
+        data: {},
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          console.log(data.flight_info);
+          this.items = data.flight_info;
+        } else {
+          this.alerter("错误", data);
+        }
+      });
+    },
+    onRowSelected: function (items) {
+      (this.selected = items), (this.flight_num = this.selected[0].flight_num);
+    },
     submit_info: function () {
       this.$axios({
-        url: this.serverURL + "admin/add_airline",
+        url: this.serverURL + "admin/update_airline",
         method: "post",
         data: {
+          a_id: this.$cookies.get("a_id"),
           a_c_id: this.a_c_id,
           start: this.start,
           destination: this.destination,
@@ -151,15 +220,16 @@ export default {
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          this.alerter("成功", "航班添加成功");
+          this.alerter("成功", "航班修改成功");
           this.init_info();
         } else {
-          this.alerter("错误", "相同的航班已存在");
+          this.alerter("错误", data.info);
         }
       });
     },
   },
   created: function () {
+    this.get_flight_all();
     this.init_info();
   },
 };
@@ -168,5 +238,8 @@ export default {
 <style scoped>
 .info-content {
   width: 100%;
+}
+.flip-list-move {
+  transition: transform 1s;
 }
 </style>

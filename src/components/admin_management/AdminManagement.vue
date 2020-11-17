@@ -81,6 +81,32 @@
             </b-breadcrumb-item>
           </div>
         </b-card>
+
+        <b-card
+          bg-variant="light"
+          title="航班管理"
+          sub-title="Airline-Management"
+          img-src="https://cdn.pixabay.com/photo/2016/04/07/17/49/aircraft-1314333_960_720.png"
+          img-alt="Image"
+          img-top
+          img-height="400"
+          tag="article"
+          style="max-width: 20rem"
+        >
+          <b-card-text>
+            在这里管理你公司旗下的航班，完成添加，删除，修改等功能。
+          </b-card-text>
+          <div @click="redirect2('add_flight')" style="cursor: pointer">
+            <b-breadcrumb-item>
+              <b-icon
+                icon="arrow-right"
+                animation="cylon"
+                font-scale="4"
+                shift-h="50"
+              ></b-icon>
+            </b-breadcrumb-item>
+          </div>
+        </b-card>
       </b-row>
     </div>
 

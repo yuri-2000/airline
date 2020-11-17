@@ -50,6 +50,7 @@
                 </div>
                 <div class="item it-2">
                   <div class="dr-row">
+                    <!-- flight_num -->
                     <span :key="item.flight_num" class="al-name">
                       {{ item.flight_num }}</span
                     >

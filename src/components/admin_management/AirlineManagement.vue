@@ -94,9 +94,7 @@ export default {
       });
     },
     onRowSelected: function (items) {
-      this.selected = items, 
-      console.log(this.selected);
-      console.log(this.selected[0].a_id);
+      this.selected = items
     },
     chooseairline: function(){
       this.$cookies.set("a_id", this.selected[0].a_id)

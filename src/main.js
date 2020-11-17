@@ -11,6 +11,7 @@ import AdminInformation from './components/admin_management/AdminInformation'
 import AirlineManagement from './components/admin_management/AirlineManagement'
 import AddAirline from './components/admin_management/AddAirline'
 import AddAirport from './components/admin_management/AddAirport'
+import AddFlight from './components/admin_management/AddFlight'
 import AirlineInformation from './components/admin_management/AirlineInformation'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
@@ -103,14 +104,14 @@ const routes = [
     path: '/airline_management',
     component: AirlineManagement,
     metadata: {
-      title: '航班管理'
+      title: '航线管理'
     },
   },
   {
     path: '/add_airline',
     component: AddAirline,
     metadata: {
-      title: '添加航班'
+      title: '添加航线'
     },
   },
   {
@@ -118,6 +119,13 @@ const routes = [
     component: AddAirport,
     metadata: {
       title: '添加机场'
+    },
+  },
+  {
+    path: '/add_flight',
+    component: AddFlight,
+    metadata: {
+      title: '添加航班'
     },
   },
   {
