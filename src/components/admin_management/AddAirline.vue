@@ -30,30 +30,22 @@
             <b-form-input type="text" v-model="flight_num"></b-form-input>
           </b-form-group>
           <b-form-group label="出发时间:">
-            <b-form-datepicker
-              v-model="start_date"
-              :date-format-options="{
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-              }"
+            <b-form-timepicker
+              v-model="start_time"
+              now-button
+              reset-button
+              reset-value="8:00"
               :hide-header="hideHeader"
-              :min="min"
-              :max="max"
-            ></b-form-datepicker>
+            ></b-form-timepicker>
           </b-form-group>
           <b-form-group label="到达时间:">
-            <b-form-datepicker
-              v-model="arrive_date"
-              :date-format-options="{
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-              }"
+            <b-form-timepicker
+              v-model="arrive_time"
+              now-button
+              reset-button
+              reset-value="14:00"
               :hide-header="hideHeader"
-              :min="min"
-              :max="max"
-            ></b-form-datepicker>
+            ></b-form-timepicker>
           </b-form-group>
           <b-form-group label="经济舱座位数:">
             <b-form-input type="number" v-model="eco"></b-form-input>
@@ -80,29 +72,28 @@ export default {
   name: "AddAirline",
   props: ["alerter"],
   data: function () {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const minDate = new Date(today);
-    minDate.setMonth(minDate.getMonth());
-    minDate.setDate(minDate.getDate());
-    const maxDate = new Date(today);
-    maxDate.setMonth(maxDate.getMonth() + 2);
-    maxDate.setDate(15);
+    // const now = new Date();
+    // const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // const minDate = new Date(today);
+    // minDate.setMonth(minDate.getMonth());
+    // minDate.setDate(minDate.getDate());
+    // const maxDate = new Date(today);
+    // maxDate.setMonth(maxDate.getMonth() + 2);
+    // maxDate.setDate(15);
     return {
       a_c_id: "",
       start: "",
       destination: "",
       air_model: "",
       flight_num: "",
-      start_date: "",
-      arrive_date: "",
+      start_time: "08:00",
+      arrive_time: "14:00",
       eco: "",
       fir: "",
       mileage: "",
       standard_price: "",
-      min: minDate,
-      max: maxDate,
       hideHeader: true,
+      hour: false,
       cityoptions: [
         { value: "SHA", text: "上海", disabled: false },
         { value: "GUA", text: "广州", disabled: false },
@@ -126,8 +117,8 @@ export default {
           destination: this.destination,
           air_model: this.air_model,
           flight_num: this.flight_num,
-          start_date: this.start_date,
-          arrive_date: this.arrive_date,
+          start_time: this.start_time,
+          arrive_time: this.arrive_time,
           eco: this.eco,
           fir: this.fir,
           mileage: this.mileage,

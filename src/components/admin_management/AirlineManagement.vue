@@ -65,7 +65,7 @@ export default {
         "flight_num",
         "start",
         "destination",
-        { key: "start_date", sortable: true },
+        { key: "start_time", sortable: true },
         { key: "standard_price", sortable: true },
       ],
       items: [],
@@ -75,7 +75,7 @@ export default {
     };
   },
   methods: {
-    // 展示所有符合条件的航班
+    // 展示所有符合条件的航线
     get_airline: function () {
       this.$axios({
         url: this.serverURL + "admin/get_airline",

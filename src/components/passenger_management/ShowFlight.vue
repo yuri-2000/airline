@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "ShowAirline",
+  name: "ShowFlight",
   props: ["alerter"],
   data: function () {
     return {
@@ -61,7 +61,10 @@ export default {
           sortable: true,
         },
         {
-          key: "start_date",
+          key: "start_time",
+        },
+        {
+          key: "arrive_time",
         },
         "selected",
       ],
@@ -72,9 +75,9 @@ export default {
   },
   methods: {
     // 展示所有符合条件的航班
-    get_airline: function () {
+    get_flight: function () {
       this.$axios({
-        url: this.serverURL + "passenger/get_airline",
+        url: this.serverURL + "passenger/get_flight",
         method: "post",
         data: {
           start: this.$cookies.get("start"),
@@ -84,8 +87,8 @@ export default {
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          console.log(data.airline_info);
-          this.items = data.airline_info;
+          console.log(data.flight_info);
+          this.items = data.flight_info;
         } else {
           this.alerter("错误", data);
         }
@@ -96,7 +99,7 @@ export default {
     },
   },
   created: function () {
-    this.get_airline();
+    this.get_flight();
   },
 };
 </script>

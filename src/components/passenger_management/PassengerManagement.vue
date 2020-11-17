@@ -72,7 +72,7 @@
           </div>
 
           <b-row>
-            <label>出发时间:</label>
+            <label>出发日期:</label>
             <b-col sm="9">
               <b-form-datepicker
                 v-model="start_date"
@@ -159,7 +159,7 @@ export default {
     },
     showairline: function () {
       this.$axios({
-        url: "http://127.0.0.1:5000/passenger/get_airline",
+        url: "http://127.0.0.1:5000/passenger/get_flight",
         method: "post",
         data: {
           start: this.start,
@@ -172,7 +172,7 @@ export default {
           this.$cookies.set("start", this.start);
           this.$cookies.set("destination", this.destination);
           this.$cookies.set("start_date", this.start_date);
-          this.$router.push("/show_airline");
+          this.$router.push("/show_flight");
         } else this.alertPop("错误", "未找到符合要求的航班");
       });
     },

@@ -10,11 +10,12 @@ import AdminManagement from './components/admin_management/AdminManagement'
 import AdminInformation from './components/admin_management/AdminInformation'
 import AirlineManagement from './components/admin_management/AirlineManagement'
 import AddAirline from './components/admin_management/AddAirline'
+import AddAirport from './components/admin_management/AddAirport'
 import AirlineInformation from './components/admin_management/AirlineInformation'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ChooseSeat from './components/passenger_management/ChooseSeat'
-import ShowAirline from './components/passenger_management/ShowAirline'
+import ShowFlight from './components/passenger_management/ShowFlight'
 import ShowTicket from './components/passenger_management/ShowTicket'
 import { BootstrapVue, BIcon, BIconArrowUp, BIconArrowDown, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -57,8 +58,8 @@ const routes = [
     },
   },
   {
-    path: '/show_airline',
-    component: ShowAirline,
+    path: '/show_flight',
+    component: ShowFlight,
     metadata: {
       title: '搜索航班'
     },
@@ -110,6 +111,13 @@ const routes = [
     component: AddAirline,
     metadata: {
       title: '添加航班'
+    },
+  },
+  {
+    path: '/add_airport',
+    component: AddAirport,
+    metadata: {
+      title: '添加机场'
     },
   },
   {
