@@ -82,10 +82,10 @@
             ></b-form-timepicker>
           </b-form-group>
           <b-form-group label="经济舱座位数:">
-            <b-form-input type="number" v-model="eco"></b-form-input>
+            <b-form-spinbutton type="number" v-model="eco" min="20" max="60" step="10"></b-form-spinbutton>
           </b-form-group>
           <b-form-group label="头等舱座位数:">
-            <b-form-input type="number" v-model="fir"></b-form-input>
+            <b-form-spinbutton type="number" v-model="fir" min="20" max="60" step="10"></b-form-spinbutton>
           </b-form-group>
           <b-form-group label="里程:">
             <b-form-input type="number" v-model="mileage"></b-form-input>
@@ -118,7 +118,7 @@ export default {
       start_time: "08:00",
       arrive_time: "14:00",
       eco: "",
-      fir: "",
+      fir: "20",
       mileage: "",
       standard_price: "",
       hideHeader: true,
@@ -160,6 +160,7 @@ export default {
       this.$axios({
         url: this.serverURL + "admin/add_airline",
         method: "post",
+        withCredentials: true,
         data: {
           a_c_id: this.a_c_id,
           start: this.start,

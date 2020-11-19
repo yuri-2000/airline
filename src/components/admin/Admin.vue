@@ -86,6 +86,7 @@ export default {
       }).then((res) => {
         let data = res.data;
         if (data.success) {
+          this.$cookies.set("id", data.id);
           this.$cookies.set("username", this.username);
           this.$router.push("/passenger_management");
         } else this.alerter("错误", "用户名已存在");

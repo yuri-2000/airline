@@ -96,6 +96,7 @@ export default {
     },
     onRowSelected: function (items) {
       (this.selected = items), console.log(this.selected);
+      this.$cookies.set("f_id", this.selected[0].id);
     },
   },
   created: function () {

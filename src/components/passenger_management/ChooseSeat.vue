@@ -20,6 +20,16 @@
           <b-form-input v-model="seat_num" class="input"> </b-form-input>
         </b-row>
       </div>
+      <div>
+        <b-row>
+          <b-button variant="danger" href="#/show_flight" class="back"
+            >返回</b-button
+          >
+        </b-row>
+      </div>
+      <div>
+        <b-button variant="info" @click="add_ticket">生成订票</b-button>
+      </div>
     </b-card>
   </div>
 </template>
@@ -27,12 +37,18 @@
 <script>
 export default {
   name: "ChooseSeat",
+  props: ["alerter"],
   data: function () {
     return {
       seat_num: "",
       length: "",
       num: "",
       a_id: "",
+      id: "",
+      f_id:"",
+      CLass: "eco",
+      start: "",
+      destination: "",
     };
   },
   methods: {
@@ -53,9 +69,31 @@ export default {
         }
       });
     },
+    add_ticket: function () {
+      this.$axios({
+        url: this.serverURL + "passenger/add_ticket",
+        method: "post",
+        withCredentials: true,
+        data: {
+          a_id: this.$cookies.get("a_id"),
+          id: this.$cookies.get("id"),
+          f_id: this.$cookies.get("f_id"),
+          seat_num: this.seat_num,
+          CLass: this.CLass,
+          start: this.$cookies.get("start"),
+          destination: this.$cookies.get("destination"),
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.alerter("成功", "订票成功");
+        } else {
+          this.alerter("错误", data.info);
+        }
+      });
+    },
     get_seat: function (num) {
       this.seat_num = num;
-      console.log(this.list[0]);
     },
   },
   created: function () {

@@ -12,9 +12,42 @@
             ></b-form-select>
           </b-form-group>
           <b-form-group label="所属航线:">
+            <b-form-input type="text" v-model="airline_id"></b-form-input>
+            <b-button v-b-toggle.my-collapse>显示航线</b-button>
+            <!-- Top of collapse -->
+            <b-collapse id="my-collapse">
+              <b-table
+                sticky-header="600px"
+                head-variant="dark"
+                striped
+                hover
+                :items="items"
+                :fields="fields"
+                selectable
+                @row-selected="onRowSelected"
+                responsive="sm"
+                :select-mode="selectMode"
+                primary-key="id"
+                :tbody-transition-props="transProps"
+                class="flip-list-move"
+                ><template #cell(selected)="{ rowSelected }">
+                  <template v-if="rowSelected">
+                    <span aria-hidden="true">&check;</span>
+                    <span class="sr-only">Selected</span>
+                  </template>
+                  <template v-else>
+                    <span aria-hidden="true">&nbsp;</span>
+                    <span class="sr-only">Not selected</span>
+                  </template>
+                </template></b-table
+              >
+            </b-collapse>
+            <!-- End of collapse -->
+          </b-form-group>
+          <b-form-group label="执飞飞机:">
             <b-form-input
               type="text"
-              v-model="airline_id"              
+              v-model="airplane_id"              
             ></b-form-input>
           </b-form-group>
           <b-form-group label="航班号:">
@@ -50,8 +83,12 @@ export default {
     maxDate.setMonth(maxDate.getMonth() + 2);
     maxDate.setDate(15);
     return {
+       transProps: {
+        name: "flip-list",
+      },
       airport_id: "",
-      airline: "",
+      airplane_id: "",
+      airline_id: "",
       flight_num: "",
       start_date: "",
       min: "",
@@ -62,6 +99,23 @@ export default {
         { value: "2", text: "白云机场", disabled: false },
         { value: "3", text: "虹桥机场", disabled: false },
       ],
+      fields: [
+        "selected",
+        "airline_id",
+        "start",
+        "destination",
+        {
+          key: "start_time",
+          sortable: true,
+        },
+        {
+          key: "mileage",
+          sortable: true,
+        },
+      ],
+      items: [],
+      selectMode: "single",
+      selected: [],
     };
   },
   methods: {
@@ -72,6 +126,7 @@ export default {
         data: {
           airport_id: this.airport_id,
           airline_id: this.airline_id,
+          airplane_id: this.airplane_id,
           flight_num: this.flight_num,
           start_date: this.start_date,
         },
@@ -85,6 +140,24 @@ export default {
         }
       });
     },
+    get_airline_all: function () {
+      this.$axios({
+        url: this.serverURL + "admin/get_airline_all",
+        method: "post",
+        data: {},
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          console.log(data.airline_info);
+          this.items = data.airline_info;
+        } else {
+          this.alerter("错误", data);
+        }
+      });
+    },
+  },
+  created: function () {
+    this.get_airline_all();
   },
 };
 </script>
@@ -92,5 +165,8 @@ export default {
 <style scoped>
 .info-content {
   width: 100%;
+}
+.flip-list-move {
+  transition: transform 1s;
 }
 </style>
