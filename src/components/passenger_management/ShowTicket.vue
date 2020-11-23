@@ -9,7 +9,7 @@
     </div>
       <b-form-checkbox></b-form-checkbox>
     </div>
-    <li class="section" v-for="ticket in tickets" :key="ticket">
+    <div class="section" v-for="ticket in tickets" :key="ticket">
       <b-form-checkbox
         class="checkbox"
         v-model="checked"
@@ -102,7 +102,7 @@
           </g>
         </symbol>
       </svg>
-    </li>
+    </div>
     <b-button variant="danger" href="#/passenger_management" class="back"
       >返回</b-button
     >

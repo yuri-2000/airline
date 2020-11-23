@@ -28,11 +28,11 @@
               :options="genderoptions"
             ></b-form-select>
           </b-form-group>
-          <b-form-group label="会员类型:">
+          <b-form-group label="会员类型:" disabled description="通过累积里程积分来升级会员，以此优享订票优惠。">
             <b-form-select type="text" v-model="type" :options="typeoptions"></b-form-select>
           </b-form-group>
-          <b-form-group label="里程积分:">
-            <b-form-input type="text" v-model="mile_score"></b-form-input>
+          <b-form-group label="里程积分:" disabled description="里程积分可通过订票所相应的里程来累积。">
+            <b-form-input type="text" v-model="mile_score" ></b-form-input>
           </b-form-group>
           <b-button variant="primary" @click="submit_info()">修改</b-button>
         </b-form>
