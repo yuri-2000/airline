@@ -155,6 +155,9 @@ export default {
         }
       });
     },
+    onRowSelected: function (items) {
+      (this.selected = items), (this.airline_id = this.selected[0].airline_id);
+    },
   },
   created: function () {
     this.get_airline_all();

@@ -55,6 +55,7 @@ export default {
         "flight_num",
         "start",
         "destination",
+        "rest",
         {
           key: "standard_price",
           lable: "price",

@@ -36,7 +36,7 @@
           <b-button variant="warning" href="#/add_airline">
             <b-icon icon="plus-circle" aria-hidden="true"></b-icon> Add
           </b-button>
-          <b-button variant="danger">
+          <b-button variant="danger" @click="delete_airline">
             <b-icon icon="dash-circle" aria-hidden="true"></b-icon> Delete
           </b-button>
           <b-button variant="info" href="#/airline_information" @click="chooseairline">
@@ -93,8 +93,26 @@ export default {
         }
       });
     },
+    delete_airline: function () {
+      this.$axios({
+        url: this.serverURL + "admin/delete_airline",
+        method: "post",
+        data: {
+          a_id: this.$cookies.get("a_id"),
+          id: this.$cookies.get("id"),
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.get_airline(this.id);
+        } else {
+          this.alerter("错误", data);
+        }
+      });
+    },
     onRowSelected: function (items) {
-      this.selected = items
+      this.selected = items;
+      this.$cookies.set("a_id", this.selected[0].a_id)
     },
     chooseairline: function(){
       this.$cookies.set("a_id", this.selected[0].a_id)

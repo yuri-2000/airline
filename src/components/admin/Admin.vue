@@ -13,8 +13,13 @@
           <b-col sm="8">
             <b-form-input
               v-model="username"
+              :state="nameState"
+              aria-describedby="input-live-feedback"
               placeholder="Username"
             ></b-form-input>
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter at least 3 letters
+            </b-form-invalid-feedback>
           </b-col>
         </b-row>
 
@@ -56,6 +61,11 @@
 <script>
 export default {
   props: ["alerter"],
+  computed: {
+    nameState() {
+      return this.username.length > 2 ? true : false;
+    },
+  },
   methods: {
     login: function () {
       this.$axios({

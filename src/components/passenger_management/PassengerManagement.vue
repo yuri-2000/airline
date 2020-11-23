@@ -182,9 +182,6 @@ export default {
     changeDestination: function (city) {
       this.destination = city;
     },
-    goback() {
-      this.$router.push("/");
-    },
   },
 };
 </script>

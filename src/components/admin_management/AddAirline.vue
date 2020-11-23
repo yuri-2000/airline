@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="card">
     <template>
-      <b-card title="添加航线" sub-title="Add Airline"></b-card>
+      <b-card title="添加航线" sub-title="Add Airline" class="card_body"></b-card>
       <b-card header="航线信息" class="info-content">
         <b-form>
           <b-form-group label="所属公司:">
@@ -117,7 +117,7 @@ export default {
       flight_num: "",
       start_time: "08:00",
       arrive_time: "14:00",
-      eco: "",
+      eco: "20",
       fir: "20",
       mileage: "",
       standard_price: "",
@@ -209,6 +209,13 @@ export default {
 </script>
 
 <style scoped>
+.card{
+  width: 60%;
+  margin: 0px auto;
+}
+.card_body{
+  width: 100%;
+}
 .info-content {
   width: 100%;
 }

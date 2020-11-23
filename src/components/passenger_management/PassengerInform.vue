@@ -29,7 +29,7 @@
             ></b-form-select>
           </b-form-group>
           <b-form-group label="会员类型:">
-            <b-form-input type="text" v-model="type"></b-form-input>
+            <b-form-select type="text" v-model="type" :options="typeoptions"></b-form-select>
           </b-form-group>
           <b-form-group label="里程积分:">
             <b-form-input type="text" v-model="mile_score"></b-form-input>
@@ -68,6 +68,12 @@ export default {
         { value: "male", text: "男"},
         { value: "female", text: "女"},
       ],
+      typeoptions: [
+        {value: "1", text:"普通乘客"},
+        {value: "0.9", text:"铜卡会员"},
+        {value: "0.7", text:"银卡会员"},
+        {value: "0.5", text:"金卡会员"},
+      ]
     };
   },
   methods: {

@@ -1,6 +1,21 @@
 <template>
   <div>
-    <li class="section" v-for="item in tickets" :key="item">
+    <div class="filter_input">
+      <b-form-input></b-form-input>
+    </div>
+    <div>
+      <div>
+      Selected: <strong>{{ checked }}</strong>
+    </div>
+      <b-form-checkbox></b-form-checkbox>
+    </div>
+    <li class="section" v-for="ticket in tickets" :key="ticket">
+      <b-form-checkbox
+        class="checkbox"
+        v-model="checked"
+        :value="ticket.t_id"
+      ></b-form-checkbox>
+      
       <div class="tpd-plan">
         <div class="tp-flight-plan">
           <div class="container-fluid">
@@ -14,8 +29,8 @@
                   <label class="trip-type depart">Departure</label>
                   <div class="airline-image">
                     <!-- seat -->
-                    <div :key="item.seat_num" class="df-text">
-                      {{ item.seat_num }}
+                    <div :key="ticket.seat_num" class="df-text">
+                      {{ ticket.seat_num }}
                     </div>
                     <span class="img-wrapper">
                       <svg class="anime-airplane">
@@ -28,20 +43,22 @@
                   <div class="port-seg">
                     <div class="flight-seg origin">
                       <!-- start_time -->
-                      <div :key="item.start_time" class="time">
-                        {{ item.start_time }}
+                      <div :key="ticket.start_time" class="time">
+                        {{ ticket.start_time }}
                       </div>
-                      <div :key="item.start" class="port">
-                        {{ item.start }}
+                      <div :key="ticket.start" class="port">
+                        {{ ticket.start }}
                       </div>
                       <!-- flight_num -->
                       <div class="name">Istanbul</div>
                     </div>
                     <div class="flight-seg destination">
                       <!-- arrive_time -->
-                      <div class="time">10:20</div>
-                      <div :key="item.destination" class="port">
-                        {{ item.destination }}
+                      <div :key="ticket.arrive_time" class="time">
+                        {{ ticket.arrive_time }}
+                      </div>
+                      <div :key="ticket.destination" class="port">
+                        {{ ticket.destination }}
                       </div>
                       <!-- destination -->
                       <div class="name">Ankara</div>
@@ -51,13 +68,16 @@
                 <div class="item it-2">
                   <div class="dr-row">
                     <!-- flight_num -->
-                    <span :key="item.flight_num" class="al-name">
-                      {{ item.flight_num }}</span
+                    <span :key="ticket.flight_num" class="al-name">
+                      {{ ticket.flight_num }}</span
                     >
                   </div>
                   <!-- start_date -->
-                  <div :key="item.start_time" class="take-tim">
-                    {{ item.start_time }}
+                  <div :key="ticket.start_date" class="take-tim">
+                    {{ ticket.start_date }}
+                  </div>
+                  <div :key="ticket.CLass" class="take-tim">
+                    {{ ticket.CLass }}
                   </div>
                 </div>
               </div>
@@ -83,21 +103,32 @@
         </symbol>
       </svg>
     </li>
-    <b-button variant="danger" href="#/passenger_management" class="back">返回</b-button>
+    <b-button variant="danger" href="#/passenger_management" class="back"
+      >返回</b-button
+    >
+    <b-button variant="danger" @click="deleteticket"
+      >退票</b-button
+    >
   </div>
 </template>
 
 <script>
 export default {
   name: "ShowTicket",
+  props: ["alerter"],
   data: function () {
     return {
       tickets: [],
+      t_id: "",
       flight_num: "",
       start: "",
       destination: "",
       seat_num: "",
       start_time: "",
+      arrive_time: "",
+      start_date: "",
+      CLass: "",
+      checked:[],
     };
   },
   methods: {
@@ -112,7 +143,25 @@ export default {
         let data = response.data;
         if (data.success) {
           console.log(data.ticket_info);
+          console.log(data.ticket_info[0].t_id);
           this.tickets = data.ticket_info;
+        } else {
+          this.alerter("错误", data);
+        }
+      });
+    },
+    deleteticket: function () {
+      this.$axios({
+        url: this.serverURL + "passenger/delete_ticket",
+        method: "post",
+        data: {
+          checked: this.checked
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.alerter("成功", "退票成功");
+          this.showticket();
         } else {
           this.alerter("错误", data);
         }
@@ -126,7 +175,15 @@ export default {
 </script>
 
 <style>
-.back{
+.filter_input {
+  width: 50%;
+}
+.checkbox {
+  left: -20px;
+  top: 60px;
+  position: absolute;
+}
+.back {
   position: absolute;
   margin-bottom: 20px;
   text-align: center;
@@ -204,7 +261,7 @@ export default {
   background-color: #f5f5f5;
   border-radius: 3px;
   padding: 5px 10px 0;
-  color: #FF9800;
+  color: #ff9800;
   font-size: 11px;
   width: 85px;
   text-align: center;
@@ -222,7 +279,7 @@ export default {
   width: calc(100% - 30px);
   height: 2px;
   /*background-color: #878787;*/
-  border-top: dashed 1px #9E9E9E;
+  border-top: dashed 1px #9e9e9e;
   top: 50%;
   left: 15px;
   margin-top: -1px;
@@ -301,7 +358,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -100%);
   font-size: 11px;
-  color: #A2A9B3;
+  color: #a2a9b3;
   text-align: center;
 }
 
