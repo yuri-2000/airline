@@ -18,7 +18,7 @@
               @focus="pass_focus()"
             ></b-form-input>
           </b-form-group>
-          <b-form-group label="姓名:">
+          <b-form-group label="公司名:">
             <b-form-input type="text" v-model="name"></b-form-input>
           </b-form-group>
           <b-button variant="primary" @click="submit_info()">修改</b-button>

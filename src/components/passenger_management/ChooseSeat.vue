@@ -22,15 +22,14 @@
       <div v-for="i in ecolength / 10" :key="i" v-show="eco_seat">
         <b-row>
           <div v-for="j in 10" :key="j">
-            <!-- seatsClass.indexOf((m - 1) * 10 + n + '') == 'fir' ? 'danger' : 'primary', -->
             <b-button
               :variant="
-                seatsNums.indexOf((i - 1) * 10 + j + '') !== -1
+                ecoseatsNums.indexOf((i - 1) * 10 + j + '') !== -1
                   ? 'danger'
                   : 'primary'
               "
               :disabled="
-                seatsNums.indexOf((i - 1) * 10 + j + '') !== -1 ? true : false
+                ecoseatsNums.indexOf((i - 1) * 10 + j + '') !== -1 ? true : false
               "
               class="seat_button"
               @click="get_seat((i - 1) * 10 + j)"
@@ -46,12 +45,12 @@
           <div v-for="n in 10" :key="(m - 1) * 10 + n">
             <b-button
               :variant="
-                seatsNums.indexOf((m - 1) * 10 + n + '') !== -1
+                firseatsNums.indexOf((m - 1) * 10 + n + '') !== -1
                   ? 'danger'
                   : 'primary'
               "
               :disabled="
-                seatsNums.indexOf((m - 1) * 10 + n + '') !== -1 ? true : false
+                firseatsNums.indexOf((m - 1) * 10 + n + '') !== -1 ? true : false
               "
               @click="get_seat((m - 1) * 10 + n)"
               class="seat_button"
@@ -111,24 +110,25 @@ export default {
       price: "",
       type: "",
       rest: "",
-      seats: [],
+      ecoseats: [],
+      firseats: [],
       eco_seat: true,
       fir_seat: false,
       ischoosed: false,
     };
   },
   computed: {
-    seatsNums() {
-      let i = this.seats.map((i) => {
+    ecoseatsNums() {
+      let i = this.ecoseats.map((i) => {
         return i.seat_num;
       });
       return i;
     },
-    seatsClass() {
-      let j = this.seats.map((i) => {
-        return i.CLass;
+    firseatsNums() {
+      let i = this.firseats.map((i) => {
+        return i.seat_num;
       });
-      return j;
+      return i;
     },
   },
   methods: {
@@ -169,9 +169,11 @@ export default {
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          this.seats = data.s_info;
-          this.rest = this.seats.length;
-          console.log(this.seats);
+          this.ecoseats = data.e_info;
+          this.firseats = data.f_info;
+          this.rest = this.ecoseats.length + this.firseats.length;
+          // console.log(this.ecoseats);
+          // console.log(this.firseats);
         } else {
           this.alerter("错误", data.info);
         }
@@ -209,11 +211,13 @@ export default {
       this.fir_seat = false;
       this.eco_seat = true;
       this.seat_num = "";
+      this.price -= 300;
     },
     changetofir: function () {
       this.eco_seat = false;
       this.fir_seat = true;
       this.seat_num = "";
+      this.price += 300;
     },
   },
   created: function () {
@@ -244,11 +248,5 @@ export default {
   margin-top: 20px;
   text-align: center;
   position: relative;
-}
-.red {
-  color: rgb(255, 0, 0);
-}
-.blue {
-  color: rgb(255, 255, 255);
 }
 </style>

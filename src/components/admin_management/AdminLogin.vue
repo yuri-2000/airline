@@ -89,6 +89,7 @@ export default {
         if (data.success) {
           this.$cookies.set("id", data.id);
           this.$cookies.set("username", this.username);
+          this.alerter("成功", "注册成功！");
           this.$router.push("/admin_management");
         } else this.alerter("错误", "用户名已存在");
       });

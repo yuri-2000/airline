@@ -1,8 +1,8 @@
 <template>
   <div>
     <template>
-      <b-card title="个人信息管理" sub-title="Passenger Information"></b-card>
-      <b-card header="我的信息" class="info-content">
+      <b-card title="添加机场" sub-title="Add Airport"></b-card>
+      <b-card header="机场信息" class="info-content">
         <b-form>
           <b-form-group label="机场名:">
             <b-form-input
@@ -16,7 +16,7 @@
           <b-form-group label="联系电话:">
             <b-form-input type="text" v-model="telephone"></b-form-input>
           </b-form-group>
-          <b-button variant="primary" @click="submit_info()">修改</b-button>
+          <b-button variant="primary" @click="submit_info()">添加</b-button>
         </b-form>
       </b-card>
     </template>
@@ -59,9 +59,8 @@ export default {
         let data = response.data;
         if (data.success) {
           this.alerter("成功", "机场添加成功");
-          this.init_info();
         } else {
-          this.alerter("错误", data.info);
+          this.alerter("错误", "相同机场已存在");
         }
       });
     },

@@ -9,10 +9,13 @@ import AdminLogin from './components/admin_management/AdminLogin'
 import AdminManagement from './components/admin_management/AdminManagement'
 import AdminInformation from './components/admin_management/AdminInformation'
 import AirlineManagement from './components/admin_management/AirlineManagement'
+import FlightManagement from './components/admin_management/FlightManagement'
 import AddAirline from './components/admin_management/AddAirline'
 import AddAirport from './components/admin_management/AddAirport'
 import AddFlight from './components/admin_management/AddFlight'
+import AddAirplane from './components/admin_management/AddAirplane'
 import AirlineInformation from './components/admin_management/AirlineInformation'
+import FlightInformation from './components/admin_management/FlightInformation'
 import PassengerManagement from './components/passenger_management/PassengerManagement'
 import PassengerInform from './components/passenger_management/PassengerInform'
 import ChooseSeat from './components/passenger_management/ChooseSeat'
@@ -108,6 +111,13 @@ const routes = [
     },
   },
   {
+    path: '/flight_management',
+    component: FlightManagement,
+    metadata: {
+      title: '航班管理'
+    },
+  },
+  {
     path: '/add_airline',
     component: AddAirline,
     metadata: {
@@ -129,8 +139,22 @@ const routes = [
     },
   },
   {
+    path: '/add_airplane',
+    component: AddAirplane,
+    metadata: {
+      title: '添加飞机'
+    },
+  },
+  {
     path: '/airline_information',
     component: AirlineInformation,
+    metadata: {
+      title: '航线信息'
+    },
+  },
+  {
+    path: '/flight_information',
+    component: FlightInformation,
     metadata: {
       title: '航班信息'
     },

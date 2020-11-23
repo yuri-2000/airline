@@ -96,7 +96,34 @@
           <b-card-text>
             在这里管理你公司旗下的航班，完成添加，删除，修改等功能。
           </b-card-text>
-          <div @click="redirect2('add_flight')" style="cursor: pointer">
+          <div @click="redirect2('flight_management')" style="cursor: pointer">
+            <b-breadcrumb-item>
+              <b-icon
+                icon="arrow-right"
+                animation="cylon"
+                font-scale="4"
+                shift-h="50"
+              ></b-icon>
+            </b-breadcrumb-item>
+          </div>
+        </b-card>
+
+        <b-card
+          bg-variant="light"
+          title="添加飞机"
+          sub-title="Add-Airport"
+          img-src="https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png"
+          img-alt="Image"
+          img-height="400"
+          img-top
+          tag="article"
+          style="max-width: 20rem"
+        >
+          <b-card-text>
+            添加飞机信息。
+          </b-card-text>
+
+          <div @click="redirect2('add_airplane')" style="cursor: pointer">
             <b-breadcrumb-item>
               <b-icon
                 icon="arrow-right"

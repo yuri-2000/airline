@@ -1,7 +1,7 @@
 <template>
   <div>
     <template>
-      <b-card title="添加航班" sub-title="Add Airline"></b-card>
+      <b-card title="修改航班" sub-title="Edit Airline"></b-card>
       <b-card header="航班信息" class="info-content">
         <b-form>
           <b-form-group label="所属机场:">
@@ -13,9 +13,11 @@
           </b-form-group>
           <b-form-group label="所属航线:">
             <b-form-input type="text" v-model="airline_id"></b-form-input>
-            <b-button variant="warning" v-b-toggle.my-collapse>显示航线</b-button>
+            <b-button variant="warning" v-b-toggle.airline-collapse
+              >显示航线</b-button
+            >
             <!-- Top of collapse -->
-            <b-collapse id="my-collapse">
+            <b-collapse id="airline-collapse">
               <b-table
                 sticky-header="600px"
                 head-variant="dark"
@@ -27,7 +29,7 @@
                 @row-selected="onRowSelected"
                 responsive="sm"
                 :select-mode="selectMode"
-                primary-key="id"
+                primary-key="a_id"
                 :tbody-transition-props="transProps"
                 class="flip-list-move"
                 ><template #cell(selected)="{ rowSelected }">
@@ -45,11 +47,10 @@
             <!-- End of collapse -->
           </b-form-group>
           <b-form-group label="执飞飞机:">
-            <b-form-input
-              type="text"
-              v-model="airplane_id"              
-            ></b-form-input>
-            <b-button variant="warning" v-b-toggle.airplane-collapse>选择飞机</b-button>
+            <b-form-input type="text" v-model="airplane_id"></b-form-input>
+            <b-button variant="warning" v-b-toggle.airplane-collapse
+              >选择飞机</b-button
+            >
             <!-- Top of collapse -->
             <b-collapse id="airplane-collapse">
               <b-table
@@ -80,6 +81,7 @@
             </b-collapse>
             <!-- End of collapse -->
           </b-form-group>
+
           <b-form-group label="航班号:">
             <b-form-input type="text" v-model="flight_num"></b-form-input>
           </b-form-group>
@@ -113,10 +115,11 @@ export default {
     maxDate.setMonth(maxDate.getMonth() + 2);
     maxDate.setDate(15);
     return {
-       transProps: {
+      transProps: {
         name: "flip-list",
       },
       airport_id: "",
+      airport_name: "",
       airplane_id: "",
       airline_id: "",
       flight_num: "",
@@ -159,11 +162,33 @@ export default {
     };
   },
   methods: {
-    submit_info: function () {
+    init_flight: function () {
       this.$axios({
-        url: this.serverURL + "admin/add_flight",
+        url: this.serverURL + "admin/get_flight_info",
         method: "post",
         data: {
+          f_id: this.$cookies.get("f_id"),
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.airport_id = data.f_info.airport_id;
+          this.airport_name = data.f_info.airport_name;
+          this.airline_id = data.f_info.a_id;
+          this.airplane_id = data.f_info.airplane_id;
+          this.flight_num = data.f_info.flight_num;
+          this.start_date = data.f_info.date;
+        } else {
+          this.alerter("错误", data.info);
+        }
+      });
+    },
+    submit_info: function () {
+      this.$axios({
+        url: this.serverURL + "admin/update_flight",
+        method: "post",
+        data: {
+          f_id: this.$cookies.get("f_id"),
           airport_id: this.airport_id,
           airline_id: this.airline_id,
           airplane_id: this.airplane_id,
@@ -173,7 +198,7 @@ export default {
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          this.alerter("成功", "航班添加成功");
+          this.alerter("成功", "航班修改成功");
           this.init_info();
         } else {
           this.alerter("错误", "相同的航班已存在");
@@ -185,7 +210,7 @@ export default {
         url: this.serverURL + "admin/get_airline",
         method: "post",
         data: {
-          id: this.$cookies.get("id")
+          id: this.$cookies.get("id"),
         },
       }).then((response) => {
         let data = response.data;
@@ -215,11 +240,13 @@ export default {
     onRowSelected: function (airlineitems) {
       (this.selected = airlineitems), (this.airline_id = this.selected[0].a_id);
     },
-     onRowSelected2: function (airplaneitems) {
-      (this.selected = airplaneitems), (this.airplane_id = this.selected[0].airplane_id);
+    onRowSelected2: function (airplaneitems) {
+      (this.selected = airplaneitems),
+        (this.airplane_id = this.selected[0].airplane_id);
     },
   },
   created: function () {
+    this.init_flight();
     this.get_airline_all();
     this.get_airplane_all();
   },

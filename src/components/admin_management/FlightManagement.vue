@@ -12,7 +12,7 @@
       @row-selected="onRowSelected"
       responsive="sm"
       :select-mode="selectMode"
-      primary-key="a_id"
+      primary-key="f_id"
       :tbody-transition-props="transProps"
       class="flip-list-move"
     >
@@ -43,12 +43,12 @@
     <div class="button">
       <b-button-toolbar>
         <b-button-group>
-          <b-button variant="warning" href="#/add_airline">
+          <b-button variant="warning" href="#/add_flight">
             <b-icon icon="plus-circle" aria-hidden="true"></b-icon> Add
           </b-button>
           <b-button
             variant="info"
-            href="#/airline_information"
+            href="#/flight_information"
             @click="chooseairline"
           >
             <b-icon icon="file-earmark" aria-hidden="true"></b-icon> Information
@@ -74,12 +74,9 @@ export default {
       fields: [
         "selected",
         { key: "flight_num" },
-        "start",
-        "destination",
-        { key: "start_time", sortable: true },
-        { key: "standard_price", sortable: true },
-        { key: "mileage", sortable: true },
-        { key: "quota", sortable: true },
+        { key: "eco", sortable: true },
+        { key: "fir", sortable: true },
+        { key: "date", sortable: true },
       ],
       filter: null,
       items: [],
@@ -90,9 +87,9 @@ export default {
   },
   methods: {
     // 展示所有符合条件的航线
-    get_airline: function () {
+    get_flight: function () {
       this.$axios({
-        url: this.serverURL + "admin/get_airline",
+        url: this.serverURL + "admin/get_flight_all",
         method: "post",
         data: {
           id: this.$cookies.get("id"),
@@ -100,8 +97,8 @@ export default {
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          console.log(data.airline_info);
-          this.items = data.airline_info;
+          console.log(data.flight_info);
+          this.items = data.flight_info;
         } else {
           this.alerter("错误", data);
         }
@@ -109,14 +106,14 @@ export default {
     },
     onRowSelected: function (items) {
       this.selected = items;
-      this.$cookies.set("a_id", this.selected[0].a_id);
+      this.$cookies.set("f_id", this.selected[0].f_id);
     },
     chooseairline: function () {
-      this.$cookies.set("a_id", this.selected[0].a_id);
+      this.$cookies.set("f_id", this.selected[0].f_id);
     },
   },
   created: function () {
-    this.get_airline();
+    this.get_flight();
   },
 };
 </script>

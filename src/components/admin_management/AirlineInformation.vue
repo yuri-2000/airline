@@ -1,15 +1,11 @@
 <template>
   <div>
     <template>
-      <b-card title="修改航线" sub-title="Add Airline"></b-card>
+      <b-card title="修改航线" sub-title="Edit Airline"></b-card>
       <b-card header="航线信息" class="info-content">
         <b-form>
-          <b-form-group label="所属公司:">
-            <b-form-select
-              type="number"
-              v-model="a_c_id"
-              :options="idoptions"
-            ></b-form-select>
+          <b-form-group label="所属公司:" disabled>
+            <b-form-input type="text" v-model="a_c_name"></b-form-input>
           </b-form-group>
           <b-form-group label="出发城市:">
             <b-form-select
@@ -24,11 +20,11 @@
             ></b-form-select>
           </b-form-group>
           <b-form-group label="飞机型号:">
-            <b-form-select
+            <b-form-input
               type="text"
               v-model="air_model"
-              :options="modeloptions"
-            ></b-form-select>
+              disabled
+            ></b-form-input>
           </b-form-group>
           <b-form-group label="航班号:">
             <b-form-input type="text" v-model="flight_num"></b-form-input>
@@ -43,10 +39,10 @@
                 :items="items"
                 :fields="fields"
                 selectable
-                 @row-selected="onRowSelected"
+                @row-selected="onRowSelected"
                 responsive="sm"
                 :select-mode="selectMode"
-                primary-key="id"
+                primary-key="f_id"
                 :tbody-transition-props="transProps"
                 class="flip-list-move"
                 ><template #cell(selected)="{ rowSelected }">
@@ -79,11 +75,14 @@
               :hide-header="hideHeader"
             ></b-form-timepicker>
           </b-form-group>
-          <b-form-group label="经济舱座位数:">
-            <b-form-spinbutton type="number" v-model="eco" min="20" max="60" step="10"></b-form-spinbutton>
-          </b-form-group>
-          <b-form-group label="头等舱座位数:">
-            <b-form-spinbutton type="number" v-model="fir" min="20" max="60" step="10"></b-form-spinbutton>
+          <b-form-group label="乘客定额:">
+            <b-form-spinbutton
+              type="number"
+              v-model="quota"
+              min="60"
+              max="200"
+              step="20"
+            ></b-form-spinbutton>
           </b-form-group>
           <b-form-group label="里程:">
             <b-form-input type="number" v-model="mileage"></b-form-input>
@@ -109,14 +108,14 @@ export default {
         name: "flip-list",
       },
       a_c_id: "",
+      a_c_name: "",
       start: "",
       destination: "",
       air_model: "",
       flight_num: "",
       start_time: "",
       arrive_time: "",
-      eco: "",
-      fir: "",
+      quota: 80,
       mileage: "",
       standard_price: "",
       hideHeader: true,
@@ -125,20 +124,11 @@ export default {
         { value: "GUA", text: "广州", disabled: false },
         { value: "BEI", text: "北京", disabled: false },
       ],
-      modeloptions: [
-        { value: "空客330", text: "空客330", disabled: false },
-        { value: "波音747", text: "波音747", disabled: false },
-        { value: "波音777", text: "波音777", disabled: false },
-      ],
-      idoptions: [
-        { value: "1", text: "北京航空", disabled: false },
-        { value: "2", text: "九元航空", disabled: false },
-        { value: "3", text: "上海航空", disabled: false },
-      ],
       options: [],
       fields: [
         "selected",
-        "id",
+        "f_id",
+        "air_model",
         {
           key: "flight_num",
           sortable: true,
@@ -165,18 +155,17 @@ export default {
         let data = response.data;
         if (data.success) {
           this.a_c_id = data.a_info.a_c_id;
+          this.a_c_name = data.a_info.a_c_name;
           this.start = data.a_info.start;
           this.destination = data.a_info.destination;
           this.air_model = data.a_info.air_model;
           this.flight_num = data.a_info.flight_num;
           this.start_time = data.a_info.start_time;
           this.arrive_time = data.a_info.arrive_time;
-          this.eco = data.a_info.eco;
-          this.fir = data.a_info.fir;
+          this.quota = data.a_info.quota;
           this.mileage = data.a_info.mileage;
           this.standard_price = data.a_info.standard_price;
         } else {
-          console.log(this);
           this.alerter("错误", data.info);
         }
       });
@@ -185,7 +174,9 @@ export default {
       this.$axios({
         url: this.serverURL + "admin/get_flight_all",
         method: "post",
-        data: {},
+        data: {
+          id: this.$cookies.get("id"),
+        },
       }).then((response) => {
         let data = response.data;
         if (data.success) {
@@ -197,7 +188,9 @@ export default {
       });
     },
     onRowSelected: function (items) {
-      (this.selected = items), (this.flight_num = this.selected[0].flight_num);
+      this.selected = items;
+      this.flight_num = this.selected[0].flight_num;
+      this.air_model = this.selected[0].air_model;
     },
     submit_info: function () {
       this.$axios({
@@ -212,8 +205,7 @@ export default {
           flight_num: this.flight_num,
           start_time: this.start_time,
           arrive_time: this.arrive_time,
-          eco: this.eco,
-          fir: this.fir,
+          quota: this.quota,
           mileage: this.mileage,
           standard_price: this.standard_price,
         },
