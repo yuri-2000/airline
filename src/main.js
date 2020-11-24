@@ -21,6 +21,7 @@ import PassengerInform from './components/passenger_management/PassengerInform'
 import ChooseSeat from './components/passenger_management/ChooseSeat'
 import ShowFlight from './components/passenger_management/ShowFlight'
 import ShowTicket from './components/passenger_management/ShowTicket'
+import DropTicket from './components/passenger_management/DropTicket'
 import { BootstrapVue, BIcon, BIconArrowUp, BIconArrowDown, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -157,6 +158,13 @@ const routes = [
     component: FlightInformation,
     metadata: {
       title: '航班信息'
+    },
+  },
+  {
+    path: '/drop_ticket',
+    component: DropTicket,
+    metadata: {
+      title: '退票'
     },
   },
 ]

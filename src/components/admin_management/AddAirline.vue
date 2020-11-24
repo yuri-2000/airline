@@ -151,16 +151,16 @@ export default {
   methods: {
     init_info: function () {
       this.$axios({
-        url: this.serverURL + "admin/get_airline_info",
+        url: this.serverURL + "admin/get_name",
         method: "post",
         data: {
-          a_id: this.$cookies.get("a_id"),
+          id: this.$cookies.get("id"),
         },
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          this.a_c_id = data.a_info.a_c_id;
-          this.a_c_name = data.a_info.a_c_name;
+          this.a_c_name = data.a_c_name;
+          console.log(this.a_c_name)
         } else {
           this.alerter("错误", data.info);
         }
@@ -172,7 +172,7 @@ export default {
         method: "post",
         withCredentials: true,
         data: {
-          a_c_id: this.a_c_id,
+          a_c_id: this.$cookies.get("id"),
           start: this.start,
           destination: this.destination,
           air_model: this.air_model,
