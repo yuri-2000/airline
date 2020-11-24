@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="filter_input">
-      <b-form-input v-model="num"></b-form-input>
+      <b-form-datepicker v-model="start_date"></b-form-datepicker>
+      <b-form-input v-model="flight_num"></b-form-input>
+      <b-button pill variant="warning" @click="filterticekt()">filter</b-button>
     </div>
     <div>
       <div>
@@ -100,7 +102,7 @@
       filterTicketList: function () {
         var key = this.key;
         var tickets = this.tickets;
-        return tickets.filter(function (item) {
+        return tickets.filter(function (item) { 
           return item.toLowerCase().indexOf(key.toLowerCase()) != -1
         });
       }
@@ -152,6 +154,25 @@
           if (data.success) {
             this.alerter("成功", "退票成功");
             this.showticket();
+          } else {
+            this.alerter("错误", data);
+          }
+        });
+      },
+      filterticekt: function () {
+        this.$axios({
+          url: this.serverURL + "passenger/filter_ticket",
+          method: "post",
+          data: {
+            id: this.$cookies.get("id"),
+            start_date: this.start_date,
+            flight_num: this.flight_num,
+          },
+        }).then((response) => {
+          let data = response.data;
+          if (data.success) {
+            console.log(data.ticket_info);
+            this.tickets = data.ticket_info;
           } else {
             this.alerter("错误", data);
           }

@@ -47,6 +47,12 @@
             <b-icon icon="plus-circle" aria-hidden="true"></b-icon> Add
           </b-button>
           <b-button
+            variant="danger"
+            @click="delete_flight"
+          >
+            <b-icon icon="file-earmark" aria-hidden="true"></b-icon> Delete
+          </b-button>
+          <b-button
             variant="info"
             href="#/flight_information"
             @click="chooseairline"
@@ -83,6 +89,7 @@ export default {
       selectMode: "range",
       selected: [],
       a_id: "",
+      f_id: "",
     };
   },
   methods: {
@@ -101,6 +108,23 @@ export default {
           this.items = data.flight_info;
         } else {
           this.alerter("错误", data);
+        }
+      });
+    },
+    delete_flight: function () {
+      this.$axios({
+        url: this.serverURL + "admin/delete_flight",
+        method: "post",
+        data: {
+          f_id: this.$cookies.get("f_id"),
+        },
+      }).then((response) => {
+        let data = response.data;
+        if (data.success) {
+          this.alerter("成功", "删除航班成功！")
+          this.get_flight();
+        } else {
+          this.alerter("错误", "删除失败");
         }
       });
     },
