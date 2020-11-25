@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view :alerter="alerter"></router-view>
+    <router-view :alerter="alerter" v-if="isRouterAlive"></router-view>
     <b-modal :title="title" v-model="popout">
       {{ content }}
     </b-modal>
@@ -10,12 +10,23 @@
 <script>
 export default {
   name: "App",
+  provide() {
+    return {
+      reload: this.reload,
+    };
+  },
   beforeCreate: function () {
     document
       .querySelector("body")
-      .setAttribute("style", "margin: 0; background-color: #ffffff");
+      .setAttribute("style", "margin: 0; background-color: #e9ecef");
   },
   methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function () {
+        this.isRouterAlive = true;
+      });
+    },
     alerter: function (title, content) {
       this.title = title;
       this.content = content;
@@ -24,6 +35,7 @@ export default {
   },
   data: function () {
     return {
+      isRouterAlive: true,
       title: "",
       content: "",
       popout: false,

@@ -21,6 +21,9 @@
           <b-form-group label="公司名:">
             <b-form-input type="text" v-model="name"></b-form-input>
           </b-form-group>
+          <b-form-group label="拥有航线数:">
+            <b-form-input type="num" v-model="total" disabled></b-form-input>
+          </b-form-group>
           <b-button variant="primary" @click="submit_info()">修改</b-button>
         </b-form>
       </b-card>
@@ -49,6 +52,7 @@ export default {
       password: "do_not_change",
       pass_first_select: true,
       name: "",
+      total: "",
     };
   },
   methods: {
@@ -73,6 +77,7 @@ export default {
         if (data.success) {
           this.username = data.a_info.username;
           this.name = data.a_info.name;
+          this.total = data.a_info.total;
         } else {
           console.log(this);
           this.alerter("错误", data.info);
@@ -89,6 +94,7 @@ export default {
           username: this.username,
           password: this.password,
           name: this.name,
+          total: this.total,
         },
       }).then((response) => {
         let data = response.data;

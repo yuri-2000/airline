@@ -41,7 +41,7 @@
           style="max-width: 20rem"
         >
           <b-card-text>
-            在这里管理你公司旗下的航线，完成添加，删除，修改等功能。
+            在这里管理你公司旗下的航线，完成添加，修改等功能。
           </b-card-text>
           <div @click="redirect2('airline_management')" style="cursor: pointer">
             <b-breadcrumb-item>

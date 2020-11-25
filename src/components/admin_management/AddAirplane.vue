@@ -1,8 +1,8 @@
 <template>
   <div>
     <template>
-      <b-card title="个人信息管理" sub-title="Passenger Information"></b-card>
-      <b-card header="我的信息" class="info-content">
+      <b-card title="添加飞机" sub-title="Add Airplane"></b-card>
+      <b-card header="飞机信息" class="info-content">
         <b-form>
           <b-form-group label="所属公司:">
             <b-form-input type="text" disabled v-model="id"></b-form-input>

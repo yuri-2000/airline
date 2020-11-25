@@ -11,6 +11,7 @@
         img-top
         tag="article"
         style="max-width: 20rem"
+        class="person"
       >
         <b-card-text>
           在这里完善你的个人资料，修改密码，公司名称等。
@@ -39,6 +40,7 @@
         img-top
         tag="article"
         style="max-width: 20rem"
+        class="search"
       >
         <div id="buy_ticket">
           <b-row>
@@ -104,6 +106,7 @@
         img-top
         tag="article"
         style="max-width: 20rem"
+        class="ticket"
       >
         <b-card-text>
           在这里完善你的个人资料，修改密码，公司名称等。
@@ -194,7 +197,22 @@ export default {
   width: 100%;
 }
 
-.botton{
+.person {
+  margin-top: 40px;
+  left: 170px;
+  position: relative;
+}
+.search {
+  margin-top: 40px;
+  left: 370px;
+  position: relative;
+}
+.ticket {
+  margin-top: 40px;
+  left: 570px;
+  position: relative;
+}
+.botton {
   margin-top: 27.5px;
 }
 .back {
